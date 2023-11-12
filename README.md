@@ -21,7 +21,7 @@ planification des itinéraires, l'optimisation des réseaux de livraison et d'au
 distances est cruciale. De nombreuses méthodes et algorithmes ont été développés pour résoudre le TSP, mais il demeure 
 un problème d'importance en recherche.
 
-
+La version recommandée de python est 3.10 et peut être téléchargée [ici](https://www.python.org/downloads/). 
 
 ## But du défi
 
@@ -55,17 +55,16 @@ d'utiliser l'un des algorithmes suivants qui, selon nous, sont les plus simples 
 
 
 ## À faire
-<span style="color:red;font-size:15pt">La première étape que vous devez faire est de créer un dossier dans le dossier 
+
+1. Vous devez faire un fork du dépôt GitHub du défi (et faire un pull request pour soumettre votre solution à la fin).
+2. <span style="color:red;font-size:15pt">Créer un dossier dans le dossier 
 `soumissions` avec un nom de votre choix et d'y copier le fichier `tsp.py`</span>
-
-<span style="font-size:18pt;color:#1c407e;text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;">**Vous 
-avez à implémenter votre propre algorithme dans la classe `TSP` du fichier [tsp.py](tsp.py) et implémenter sa méthode 
+3. **Implémenter votre propre algorithme dans la classe `TSP` du fichier [tsp.py](tsp.py) et implémenter sa méthode 
 `get_solution() -> Union[Tuple, List[int], np.ndarray]`. Votre algorithme peut comporter autant de méthodes et d'attributs 
-que vous souhaitez, mais la méthode `get_solution()` doit s'y trouver.**</span> 
-
-De plus, la signature du constructeur de la classe `TSP` ne devrait pas être modifiée. Toutefois, le contenu du
+que vous souhaitez, mais la méthode `get_solution()` doit s'y trouver.** De plus, la signature du constructeur de la classe `TSP` ne devrait pas être modifiée. Toutefois, le contenu du
 constructeur peut être modifié à votre guise.
-
+4. Pour tester votre implementation, vous pouvez rouler le script `run_tests.py` en changeant la ligne 61 pour `input_folder = "./soumissions/{Nom de votre dossier}"`
+   
 Finalement, l'utilisation de librairies de résolution du problème de TSP comme networkx est interdite. Vous devez
 implémenter votre propre algorithme de résolution de TSP à l'aide des librairies de base de python (numpy, scipy,
 etc.). Vous pouvez utiliser des librairies pour générer des graphes aléatoires, mais vous ne pouvez pas utiliser de
@@ -82,7 +81,7 @@ Le coût du cycle hamiltonien sera calculé à l'aide de l'objet `PerformanceTes
 [tester.py](tools/tester.py). Si l'interface n'est pas respecté (le type de sortie de 
 la méthode `get_solution`, le nom de l'objet) ou si le code contient un/des erreur(s), la performance de votre code 
 sera malheureusement égal à zéro. Dans ce cas, assurez-vous de bien respecter l'interface et de rouler les tests afin
-de vous assurez de ne pas avoir de problème lors de la correction. Le score utilisé pour l'évaluation sera:
+de vous assurez de ne pas avoir de problème lors de la correction. Le score utilisé pour l'évaluation sera :
 ```
 score = (target_cost / cycle_cost) * 100 [%]
 ```
@@ -109,7 +108,7 @@ qui va rouler les tests et vous afficher vos résultats.
 
 
 <span style="color:red;font-size:40pt">**ATTENTION** IL EST TRÈS IMPORTANTE DE RESPECTER LES SECTIONS SUIVANTES POUR QUE
-VOTRE SOLUTION SOIT ÉVALUÉ</span> 
+VOTRE SOLUTION SOIT ÉVALUÉE</span> 
 
 ## Remise du projet
 

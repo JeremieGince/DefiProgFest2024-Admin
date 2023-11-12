@@ -86,7 +86,7 @@ def gen_best_solution(
             if cost < best_cost:
                 best_cost = cost
                 best_path = cycle
-                best_method = method
+                best_method = func
         except Exception as e:
             print(f"Method {method} failed with error: {e}.")
     return best_path, best_cost, best_method
@@ -129,7 +129,7 @@ def gen_datum(
         path_cost=cost,
         seed=seed,
         graph_init_method=graph_init_method,
-        tsp_method=mth,
+        tsp_method=(mth.__name__ if callable(mth) else str(mth)),
     )
     if save_path is not None:
         os.makedirs(os.path.dirname(save_path), exist_ok=True)
@@ -159,7 +159,12 @@ def gen_dataset(
         filepath: str = "./data/data.pkl",
         n_nodes_range: Tuple[int, int] = (2, 10_000),
         gen_methods: Union[str, List[str], Tuple[str, ...]] = ("random", "geometric"),
-        tsp_methods: Union[Any, List[Any], Tuple[Any, ...]] = None,
+        tsp_methods: Union[Any, List[Any], Tuple[Any, ...]] = (
+            "christofides",
+            "greedy_tsp",
+            greedy_simulated_annealing_tsp,
+            greedy_threshold_accepting_tsp,
+        ),
         seed: int = 0,
         **kwargs
 ):
@@ -199,7 +204,7 @@ if __name__ == '__main__':
     gen_dataset(
         n_data=100,
         filepath="../data/data.pkl",
-        n_nodes_range=(4, 1_000),
+        n_nodes_range=(10, 1_000),
         gen_methods=("random", "geometric"),
         tsp_methods=(
             "christofides",

@@ -57,13 +57,14 @@ d'utiliser l'un des algorithmes suivants qui, selon nous, sont les plus simples 
 ## À faire
 
 1. Vous devez faire un fork du dépôt GitHub du défi (et faire un pull request pour soumettre votre solution à la fin).
+   - Si vous êtes présenté avec un choix entre "to contribute to the parent repository" et "For my own purposes" lors du fork, choisissez "contribute"
 2. <span style="color:red;font-size:15pt">Créer un dossier dans le dossier 
 `soumissions` avec un nom de votre choix et d'y copier le fichier `tsp.py`</span>
 3. **Implémenter votre propre algorithme dans la classe `TSP` du fichier [tsp.py](tsp.py) et implémenter sa méthode 
 `get_solution() -> Union[Tuple, List[int], np.ndarray]`. Votre algorithme peut comporter autant de méthodes et d'attributs 
 que vous souhaitez, mais la méthode `get_solution()` doit s'y trouver.** De plus, la signature du constructeur de la classe `TSP` ne devrait pas être modifiée. Toutefois, le contenu du
 constructeur peut être modifié à votre guise.
-4. Pour tester votre implementation, vous pouvez rouler le script `run_tests.py` en changeant la ligne 61 pour `input_folder = "./soumissions/{Nom de votre dossier}"`
+4. Pour tester votre implementation, vous pouvez rouler le script `run_tests.py` en changeant la ligne 61 pour `input_folder = "./soumissions/{Nom de votre dossier}"` ou en roulant le script dans la console avec 
    
 Finalement, l'utilisation de librairies de résolution du problème de TSP comme networkx est interdite. Vous devez
 implémenter votre propre algorithme de résolution de TSP à l'aide des librairies de base de python (numpy, scipy,
@@ -135,8 +136,7 @@ sur GitHub pour soumettre votre solution. Prenez exemple sur le dossier
 [RandomTeam](soumissions/RandomTeam) pour savoir comment organiser votre soumission. Les seuls fichiers modifiés 
 devraient se trouver dans 
 le dossier que vous avez créé dans le dossier `soumissions`, sinon votre pull request sera refusé. 
-<span style="color: red"> i.e.: Vous ne devez pas modifier les fichiers `main.py`, `tsp.py`, `run_test.py`, mais les 
-copier dans le dossier que vous avez créé dans `soumissions` et les modifier à cet endroit</span>. Si vous avez des 
+<span style="color: red"> i.e.: Vous ne devez pas modifier les fichiers `./main.py`, `./tsp.py`, `./run_test.py` qui se trouve dans le _root directory_</span>. Si vous avez des 
 questions sur la procédure de soumission, vous pouvez faire un *issue* dans le dépôt GitHub du défi où nous pourrons 
 répondre à toutes vos questions et vous aurez accès à toutes les questions posées.
 

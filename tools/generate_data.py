@@ -64,7 +64,12 @@ def gen_random_graph(
 
 def gen_best_solution(
         adjacency_matrix: np.ndarray,
-        methods: Union[str, List[str]] = None
+        methods: Union[str, List[str]] = (
+            "christofides",
+            "greedy_tsp",
+            greedy_simulated_annealing_tsp,
+            greedy_threshold_accepting_tsp,
+        )
 ) -> tuple[Optional[list], float, Union[Optional[str], Any]]:
     if methods is None:
         methods = nx_tsp_app.__all__
@@ -201,9 +206,10 @@ def gen_dataset(
 
 
 if __name__ == '__main__':
+    root_folder = ".." if os.path.basename(os.getcwd()) == "tools" else "."
     gen_dataset(
-        n_data=100,
-        filepath="../data/data.pkl",
+        n_data=1_000,
+        filepath=os.path.join(root_folder, "data", "data.pkl"),
         n_nodes_range=(10, 1_000),
         gen_methods=("random", "geometric"),
         tsp_methods=(
@@ -213,6 +219,6 @@ if __name__ == '__main__':
             greedy_threshold_accepting_tsp,
         ),
         seed=0,
-        # nb_workers=0,
+        nb_workers=0,
         rm_temp_folder=False,
     )

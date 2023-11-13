@@ -6,7 +6,7 @@ from importlib import import_module
 
 import pythonbasictools as pbt
 
-from tools.tester import PerformanceTestCase, Tester, PEP8TestCase
+from tools.tester import PerformanceTestCase, Tester, PEP8TestCase, CheckNotAllowedLibrariesTestCase
 
 
 def get_data(data_file_path: str = "./data/data.pkl"):
@@ -32,6 +32,13 @@ def main(root_folder: str, data_file_path: str = "./data/data.pkl"):
     tester = Tester()
     pep8_test = PEP8TestCase(name="PEP8", file_path="./tsp.py")
     tester.add_test(pep8_test)
+    lib_tester = CheckNotAllowedLibrariesTestCase(
+        name="Check not allowed libraries",
+        path=root_folder,
+        not_allowed_libraries=["networkx"],
+        excluded_folders=[os.path.join(root_folder, "venv"), os.path.join(root_folder, "__pycache__")],
+    )
+    tester.add_test(lib_tester)
     data = get_data(data_file_path=data_file_path)
     cwd = os.getcwd()
     print(f"Working directory: {os.getcwd()}")

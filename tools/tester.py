@@ -1,3 +1,5 @@
+import os
+import warnings
 from typing import List, Optional, Union, Tuple
 
 import numpy as np
@@ -65,9 +67,11 @@ class PerformanceTestCase(TestCase):
         self.constructor_inputs = constructor_inputs if constructor_inputs is not None else []
         self.get_solution_mth_name = get_solution_mth_name
         self.expected_solutions = expected_solutions
+        self._warnings = set()
 
     def compute_score(self, adjacency_matrix, solution, target_solution) -> float:
         if not self.is_hamiltonian_cycle(adjacency_matrix, solution):
+            self._warnings.add("The solution is not a Hamiltonian cycle.")
             return 0.0
         obj_cost = self.get_path_cost(adjacency_matrix, solution)
         target_cost = self.get_path_cost(adjacency_matrix, target_solution)
@@ -78,6 +82,7 @@ class PerformanceTestCase(TestCase):
     def run(self, verbose: bool = True):
         p_bar = tqdm.tqdm(self.constructor_inputs, desc=f"Running {self.name}", disable=not verbose)
         scores = []
+        message = ""
         for i, constructor_input in enumerate(p_bar):
             target_solution = self.expected_solutions[i]
             try:
@@ -91,9 +96,11 @@ class PerformanceTestCase(TestCase):
             score = self.compute_score(constructor_input[0], solution, target_solution) * 100.0
             scores.append(score)
             p_bar.set_postfix(score=score)
-
+        if self._warnings:
+            warnings.warn(f"{self.name}: {' & '.join(self._warnings)}", RuntimeWarning)
+            message = f"Warnings: {' & '.join(self._warnings)}"
         mean_score = np.mean(scores)
-        result = TestResult(self.name, mean_score)
+        result = TestResult(self.name, mean_score, message=message)
         p_bar.set_postfix_str(f"{result}")
         p_bar.close()
         return result
@@ -117,6 +124,60 @@ class PEP8TestCase(TestCase):
             err_ratio = result.total_errors / result.counters['physical lines']
         percent_value = np.clip(100.0 - (err_ratio * 100.0), 0.0, 100.0).item()
         return TestResult(self.name, percent_value, message=message)
+
+
+class CheckNotAllowedLibrariesTestCase(TestCase):
+    def __init__(self, name: str, path: str, not_allowed_libraries: List[str], **kwargs):
+        self.name = name
+        self.path = path
+        self.not_allowed_libraries = not_allowed_libraries
+        self._warnings = set()
+        self._excluded_files = kwargs.get("excluded_files", [])
+        self._excluded_folders = kwargs.get("excluded_folders", [])
+
+    def check_file(self, file_path: str) -> bool:
+        with open(file_path, "r") as f:
+            file_content = f.read()
+        check = True
+        for lib in self.not_allowed_libraries:
+            if f"import {lib}" in file_content:
+                self._warnings.add(f"The library '{lib}' is not allowed.")
+                check = False
+        return check
+
+    def gather_files(self) -> List[str]:
+        r"""
+        Check if self.path is a file or a folder. If it is a file, return a list with only self.path. If it is a
+        folder, return all the files in the folder and its subfolders.
+        """
+        if os.path.isfile(self.path):
+            return [self.path]
+        elif os.path.isdir(self.path):
+            files = []
+            for root, dirs, filenames in os.walk(self.path):
+                if any([
+                    os.path.normpath(excluded_folder) in os.path.normpath(root)
+                    for excluded_folder in self._excluded_folders
+                ]):
+                    continue
+                for filename in filenames:
+                    if filename.endswith(".py") and filename not in self._excluded_files:
+                        files.append(os.path.join(root, filename))
+            return files
+        else:
+            raise ValueError(f"Invalid path: '{self.path}'.")
+
+    def run(self):
+        files = self.gather_files()
+        score = 100.0
+        message = ""
+        for file_path in files:
+            if not self.check_file(file_path):
+                score = 0.0
+        if self._warnings:
+            warnings.warn(f"{self.name}: {' & '.join(self._warnings)}", RuntimeWarning)
+            message = f"Warnings: {' & '.join(self._warnings)}"
+        return TestResult(self.name, score, message=message)
 
 
 class Tester:

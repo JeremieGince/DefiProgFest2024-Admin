@@ -1,2 +1,3 @@
 [PEP8: 100.00 %]
-[Performance Test on 100 graphs: 20.87 %]
+[Check not allowed libraries: 0.00 %, (Warnings: The library 'networkx' is not allowed.)]
+[Performance Test on 316 graphs: 11.69 %]

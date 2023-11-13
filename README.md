@@ -136,8 +136,7 @@ sur GitHub pour soumettre votre solution. Prenez exemple sur le dossier
 [RandomTeam](soumissions/RandomTeam) pour savoir comment organiser votre soumission. Les seuls fichiers modifiés 
 devraient se trouver dans 
 le dossier que vous avez créé dans le dossier `soumissions`, sinon votre pull request sera refusé. 
-<span style="color: red"> i.e.: Vous ne devez pas modifier les fichiers `main.py`, `tsp.py`, `run_test.py`, mais les 
-copier dans le dossier que vous avez créé dans `soumissions` et les modifier à cet endroit</span>. Si vous avez des 
+<span style="color: red"> i.e.: Vous ne devez pas modifier les fichiers `./main.py`, `./tsp.py`, `./run_test.py` qui se trouve dans le _root directory_</span>. Si vous avez des 
 questions sur la procédure de soumission, vous pouvez faire un *issue* dans le dépôt GitHub du défi où nous pourrons 
 répondre à toutes vos questions et vous aurez accès à toutes les questions posées.
 
